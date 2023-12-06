@@ -10,13 +10,13 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
 } from 'react-native';
-import {MyStack} from './navigations/stack-navigation';
-import MyTabs from './navigations/button-tabs-navigation';
-const App = () => {
+const ProfilePage = () => {
   return (
-    <NavigationContainer>
-      <MyTabs></MyTabs>
-    </NavigationContainer>
+    <SafeAreaView>
+      <Text>Profile Page</Text>
+    </SafeAreaView>
   );
 };
-export default App;
+const styles = StyleSheet.create({});
+
+export default ProfilePage;
