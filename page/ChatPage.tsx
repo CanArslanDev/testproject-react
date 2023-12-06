@@ -12,8 +12,7 @@ import {
 
 const ChatPage = () => {
   const messages = [
-    {user: 'kullanıcı', text: 'Merhaba!', timestamp: new Date().getTime()},
-    // Add more sample messages as needed
+    { user: 'kullanıcı', text: 'Merhaba!', timestamp: new Date().getTime() },
   ];
 
   const formatTime = (timestamp: number) => {
@@ -25,7 +24,7 @@ const ChatPage = () => {
     return `${hoursText}:${minutesText}`;
   };
 
-  const renderItem = ({item}) => (
+  const renderItem = ({ item }) => (
     <View
       style={
         item.user !== 'kullanıcı'
@@ -45,19 +44,20 @@ const ChatPage = () => {
       <FlatList
         style={styles.messageList}
         data={messages}
-        keyExtractor={item => item.timestamp.toString()}
+        keyExtractor={(item) => item.timestamp.toString()}
         renderItem={renderItem}
       />
       <KeyboardAvoidingView behavior="padding" style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          returnKeyType="send"
-          placeholder="Type a message..."
-          // Add onChangeText and value props as needed
-        />
-        <TouchableOpacity style={styles.sendButton}>
-          <Text style={styles.sendButtonText}>Send</Text>
-        </TouchableOpacity>
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={styles.textInput}
+            returnKeyType="send"
+            placeholder="Type a message..."
+          />
+          <TouchableOpacity style={styles.sendButton}>
+            <Text style={styles.sendButtonText}>Send</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
   },
   messageList: {
     flex: 1,
-    marginBottom: 10,
+    margin: 10,
   },
   messageContainerUser: {
     alignSelf: 'flex-end',
     alignItems: 'flex-end',
     padding: 10,
-    backgroundColor: '#4CAF50', // Green color for user messages
+    backgroundColor: '#2196F3',
     borderRadius: 8,
     marginBottom: 5,
     maxWidth: '70%',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     alignItems: 'flex-start',
     padding: 10,
-    backgroundColor: '#2196F3', // Blue color for other messages
+    backgroundColor: '#2196F3',
     borderRadius: 8,
     marginBottom: 5,
     maxWidth: '70%',
@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     end: 10,
     bottom: 10,
-  },
-  inputContainer: {
+  }, inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
@@ -122,18 +121,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
   },
+  inputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 25,
+    overflow: 'hidden',
+  },
   textInput: {
     flex: 1,
     borderColor: '#2196F3',
     borderWidth: 1,
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 25,
     marginBottom: 10,
   },
   sendButton: {
     marginLeft: 10,
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 25,
     backgroundColor: '#2196F3',
   },
   sendButtonText: {

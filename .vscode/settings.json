@@ -1,0 +1,24 @@
+{
+    "files.exclude": {
+        "README.md": false,
+        "tsconfig.json": false,
+        "package-lock.json": false,
+        "metro.config.js": false,
+        "jest.config.js": false,
+        "__tests__": false,
+        ".vscode": false,
+        "android": false,
+        "ios": false,
+        "node_modules": false,
+        "vendor/bundle/ruby/2.6.0": false,
+        ".eslintrc.js": false,
+        ".gitignore": false,
+        ".prettierrc.js": false,
+        ".watchmanconfig": false,
+        "babel.config.js": false,
+        "Gemfile": false,
+        "Gemfile.lock": false,
+        "index.js": false,
+        "vendor": false
+    }
+}

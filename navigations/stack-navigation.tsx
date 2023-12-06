@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomePage from '../HomePage';
-import ChatPage from '../ChatPage';
-import {ScreenStackHeaderSearchBarView} from 'react-native-screens';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomePage from '../page/HomePage';
+import ChatPage from '../page/ChatPage';
+import { ScreenStackHeaderSearchBarView } from 'react-native-screens';
 const Stack = createNativeStackNavigator();
 
 export function MyStack() {
