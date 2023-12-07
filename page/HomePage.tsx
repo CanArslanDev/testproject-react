@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   FlatList,
@@ -9,8 +9,8 @@ import {
   Image,
   Button,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
 
 interface HomePageProps {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -21,18 +21,18 @@ interface User {
   username: string;
 }
 
-const HomePage = ({ navigation }: HomePageProps) => {
+const HomePage = ({navigation}: HomePageProps) => {
   const [users, setUsers] = useState<User[]>([
-    { id: '1', username: 'User1' },
-    { id: '2', username: 'User2' },
-    { id: '3', username: 'User3' },
+    {id: '1', username: 'User1'},
+    {id: '2', username: 'User2'},
+    {id: '3', username: 'User3'},
   ]);
 
   const handleUserSelect = (selectedUser: User) => {
     console.log(`Selected user: ${selectedUser.username}`);
   };
 
-  const renderItem = ({ item }: { item: User }) => (
+  const renderItem = ({item}: {item: User}) => (
     <TouchableOpacity
       style={styles.userItem}
       onPress={() => navigation.navigate('ChatPage')}>
@@ -60,10 +60,6 @@ const HomePage = ({ navigation }: HomePageProps) => {
         keyExtractor={item => item.id}
         renderItem={renderItem}
         contentContainerStyle={styles.userList}
-      />
-      <Button
-        title="Go to ChatPage"
-        onPress={() => navigation.navigate('ChatPage')}
       />
     </SafeAreaView>
   );

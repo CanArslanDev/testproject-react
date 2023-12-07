@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Text,
   TextInput,
@@ -10,21 +9,50 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const ChatPage = () => {
-  const messages = [
-    { user: 'kullanıcı', text: 'Merhaba!', timestamp: new Date().getTime() },
-  ];
-
+import {AppState} from '../redux';
+import {sendMessage, deleteMessage} from '../redux/actions';
+import {Message} from '../redux/models';
+import {bindActionCreators, Dispatch} from 'redux';
+import {connect} from 'react-redux';
+import React, {useState} from 'react';
+const mapStateToProps = (state: AppState) => ({
+  chat: state.chat,
+});
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({sendMessage, deleteMessage}, dispatch);
+type AppProps = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+const ChatPage: React.FC<AppProps> = (props: AppProps) => {
+  const initMessage: Message = {
+    user: 'kullanıcı',
+    timestamp: new Date().getTime(),
+    text: '',
+  };
+  const [message, setMessage] = useState<Message>(initMessage);
+  const handleSend = () => {
+    console.log('Message:' + message.text);
+    if (message.text === '') {
+      return;
+    }
+    props.sendMessage(message);
+    setMessage(initMessage);
+  };
+  const handleChangeText = (e: string) => {
+    setMessage({
+      text: e,
+      timestamp: new Date().getTime(),
+      user: 'kullanıcı',
+    });
+  };
   const formatTime = (timestamp: number) => {
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const hoursText = hours < 10 ? `0${hours}` : hours;
-    const minutesText = minutes < 10 ? `0${minutes}` : minutes;
+    const minutesText = minutes < 10 ? `0${minutes}` : hours;
     return `${hoursText}:${minutesText}`;
   };
-
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View
       style={
         item.user !== 'kullanıcı'
@@ -38,13 +66,13 @@ const ChatPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.appbarView}>
+      {/* <View style={styles.appbarView}>
         <Text style={styles.appbarText}>Chat</Text>
-      </View>
+      </View> */}
       <FlatList
         style={styles.messageList}
-        data={messages}
-        keyExtractor={(item) => item.timestamp.toString()}
+        data={props.chat.messages}
+        keyExtractor={item => item.timestamp.toString()}
         renderItem={renderItem}
       />
       <KeyboardAvoidingView behavior="padding" style={styles.inputContainer}>
@@ -52,17 +80,22 @@ const ChatPage = () => {
           <TextInput
             style={styles.textInput}
             returnKeyType="send"
+            onChangeText={handleChangeText}
+            onSubmitEditing={handleSend}
+            value={message.text}
             placeholder="Type a message..."
           />
           <TouchableOpacity style={styles.sendButton}>
-            <Text style={styles.sendButtonText}>Send</Text>
+            <Text style={styles.sendButtonText} onPress={handleSend}>
+              Send
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
+export default connect(mapStateToProps, mapDispatchToProps)(ChatPage);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -113,7 +146,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     end: 10,
     bottom: 10,
-  }, inputContainer: {
+  },
+  inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
@@ -147,5 +181,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default ChatPage;
